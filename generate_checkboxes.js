@@ -1,9 +1,12 @@
 var permutations = require('./permutations.js');
-var Former = require('./former.js');
 var Underscore = require('underscore');
 
 
 var CHECK_BOX_COUNT = 6;
+
+exports = module.exports = function () {
+
+}
 
 var getPromptText = function (sample) {
   var text = "";
@@ -56,16 +59,20 @@ var getPromptText = function (sample) {
 
 }
 
+exports.getData = function () {
+  perms = permutations.getPermutations(CHECK_BOX_COUNT);
 
-perms = permutations.getPermutations(CHECK_BOX_COUNT);
+  perms = Underscore.shuffle(perms);
 
-perms = Underscore.shuffle(perms);
+  return perms;
+}
 
-Former.generateForm(perms, "checkbox", function (data, i) {
-      var prompt = getPromptText(data[i]);
-      var output = "<br><p>"+prompt+"</p>";
-      for(var k=0; k<data[i].length; k++) {
-        output += "<input type='checkbox' name='input["+i+"]["+k+"]' >"  
-      }
-      return output;
-  });
+exports.codeGenerator = function (item, i) {
+  var prompt = getPromptText(item);
+  var output = "<br><p>"+prompt+"</p>";
+  console.log("data length: "+item);
+  for(var k=0; k<item.length; k++) {
+    output += "<input type='checkbox' name='input["+i+"]["+k+"]' >"  
+  }
+  return output;
+}

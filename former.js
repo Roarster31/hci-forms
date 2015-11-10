@@ -7,7 +7,7 @@ exports = module.exports = function () {
 }
 
 var QUESTION_LIMIT = exports.QUESTION_LIMIT = 15;
-var QUESTIONNAIRE_COUNT = exports.QUESTIONNAIRE_COUNT = 3;
+var DEFAULT_QUESTIONNAIRE_COUNT = exports.DEFAULT_QUESTIONNAIRE_COUNT = 3;
 var OUT_PATH = __dirname+"/out/";
 
 var writeFile = function (filename, data) {
@@ -22,11 +22,16 @@ var writeFile = function (filename, data) {
     })
 }
 
-exports.generateForm = function (dataArray, formName, formItemGenerator) {
+exports.generateForm = function (dataArray, formName, formItemGenerator, questionnaireCount) {
 
-  var sampleSize = Math.floor(dataArray.length / QUESTIONNAIRE_COUNT);
+  var questionCount = (typeof questionnaireCount === 'undefined') ? DEFAULT_QUESTIONNAIRE_COUNT : questionnaireCount;
 
-  for(var i=0; i<QUESTIONNAIRE_COUNT; i++) {
+  console.log("questionCount: "+questionCount);
+  console.log(dataArray);
+
+  var sampleSize = Math.floor(dataArray.length / questionCount);
+
+  for(var i=0; i<questionCount; i++) {
     var sample = dataArray.slice(0+sampleSize*i, sampleSize + i*sampleSize);
     console.log("sample "+i+":");
     console.log(sample);
@@ -37,7 +42,7 @@ exports.generateForm = function (dataArray, formName, formItemGenerator) {
     var form = "";
 
     for(var j=0; j<sample.length; j++) {
-      form += formItemGenerator(sample, j);
+      form += formItemGenerator(sample[j], j);
     }
 
     var html = preForm + form + postForm;
