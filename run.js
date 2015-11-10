@@ -11,11 +11,17 @@ var runTraining = process.argv.indexOf('--training') != -1 || all;
 
 if (runText) {
   Former.generateForm(Lorem.getData(), "text_input", Lorem.codeGenerator);
-} else if (runCheckbox) {
+} 
+
+if (runCheckbox) {
   Former.generateForm(Checkbox.getData(), "checkbox", Checkbox.codeGenerator);
-} else if (runTraining) {
+}
+
+if (runTraining) {
   Former.generateForm(Training.getData(), "training", Training.codeGenerator, 1);
-} else {
+} 
+
+if(!runText && !runCheckbox && !runTraining) {
 
   console.log("Please sepcify an argument:");
   console.log("--text, to generate input text files");
