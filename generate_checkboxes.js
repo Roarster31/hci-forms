@@ -72,7 +72,7 @@ exports.codeGenerator = function (item, i) {
   var output = "<br><p>"+prompt+"</p>";
   console.log("data length: "+item);
   for(var k=0; k<item.length; k++) {
-    output += "<input type='checkbox' name='input["+i+"]["+k+"]' value='"+item+"'>" 
+    output += "<input type='checkbox' name='input["+i+"]["+k+"]'>" 
     output += "<input type='hidden' name='en_input["+i+"]["+k+"]' value='"+(item[k] == 1)+"'>"  
   }
   return output;
