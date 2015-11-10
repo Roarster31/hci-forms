@@ -13,7 +13,9 @@ router.get('/question', function(req, res){
 router.get('/sendForm', function(req, res){
     res.send("You send" + req.body.name);
     for(var i = 0; i < 15;i++) {
-        req.query.input
+        for(var x = 0; x < 5; x++){
+            var result = req.query.input[i][x];
+        }
     }
 });
 router.get('/', function(req, res, next) {

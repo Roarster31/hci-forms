@@ -37,7 +37,7 @@ exports.generateForm = function (dataArray, formName, formItemGenerator, questio
     console.log(sample);
 
     var preForm = "<!DOCTYPE html><html><body><link rel='stylesheet' href='/stylesheets/style.css'> <form action='/sendForm' method='get'>";
-    var postForm = "<input type='submit' value='Done' /> </form></body></html>";
+    var postForm = "<br /><input type='submit' value='Done' /> </form></body></html>";
 
     var form = "";
 
