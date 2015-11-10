@@ -1,0 +1,5 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Main" type="NodeJSConfigurationType" factoryName="Node.js" path-to-node="/usr/local/bin/node" path-to-js-file="bin/www" application-parameters="DEBUG=hci-hoster:*" working-dir="$PROJECT_DIR$">
+    <method />
+  </configuration>
+</component>
