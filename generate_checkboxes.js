@@ -1,7 +1,9 @@
 var permutations = require('./permutations.js');
+var Former = require('./former.js');
 var Underscore = require('underscore');
-var mkdirp = require("mkdirp");
-var fs = require('fs');
+
+
+var CHECK_BOX_COUNT = 6;
 
 var getPromptText = function (sample) {
   var text = "";
@@ -54,47 +56,16 @@ var getPromptText = function (sample) {
 
 }
 
-var sampleCount = 3;
-var checkBoxCount = 6;
 
-perms = permutations.getPermutations(checkBoxCount);
+perms = permutations.getPermutations(CHECK_BOX_COUNT);
 
 perms = Underscore.shuffle(perms);
 
-var sampleSize = Math.floor(perms.length / sampleCount);
-
-for(var i=0; i<sampleCount; i++) {
-  var sample = perms.slice(0+sampleSize*i, sampleSize + i*sampleSize);
-  console.log("sample "+i+":");
-  console.log(sample);
-
-  var preForm = "<!DOCTYPE html><html><body><form action=''>";
-  var postForm = "</form></body></html>";
-
-  var form = "";
-
-  for(var j=0; j<sample.length; j++) {
-    var prompt = getPromptText(sample[j]);
-    form += "<br><p>"+prompt+"</p>";
-    for(var k=0; k<checkBoxCount; k++) {
-      form += "<input type='checkbox' name='input"+j+"' value='"+k+"'>"  
-    }
-    
-  }
-
-  var html = preForm + form + postForm;
-
-  var filePath = __dirname+"/out/sample"+i+".html";
-  
-  mkdirp(filePath, function (err) {
-    fs.writeFile(filePath, html, function(err) {
-      if(err) {
-          return console.log(err);
+Former.generateForm(perms, "checkbox", function (data, i) {
+      var prompt = getPromptText(data[i]);
+      var output = "<br><p>"+prompt+"</p>";
+      for(var k=0; k<data[i].length; k++) {
+        output += "<input type='checkbox' name='input["+i+"]["+k+"]' >"  
       }
-
-      console.log("Sample "+i+" was saved!");
-  }); 
-  })
-  
-
-}
+      return output;
+  });
