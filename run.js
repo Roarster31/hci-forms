@@ -10,15 +10,15 @@ var runCheckbox = process.argv.indexOf('--checkbox') != -1 || all;
 var runTraining = process.argv.indexOf('--training') != -1 || all;
 
 if (runText) {
-  Former.generateForm(Lorem.getData(), "text_input", Lorem.codeGenerator);
+  Former.generateForm(Lorem.getData, "text_input", Lorem.codeGenerator);
 } 
 
 if (runCheckbox) {
-  Former.generateForm(Checkbox.getData(), "checkbox", Checkbox.codeGenerator);
+  Former.generateForm(Checkbox.getData, "checkbox", Checkbox.codeGenerator);
 }
 
 if (runTraining) {
-  Former.generateForm(Training.getData(), "training", Training.codeGenerator, 1);
+  Former.generateForm(Training.getData, "training", Training.codeGenerator, 1);
 } 
 
 if(!runText && !runCheckbox && !runTraining) {

@@ -22,8 +22,9 @@ var writeFile = function (filename, data) {
     })
 }
 
-exports.generateForm = function (dataArray, formName, formItemGenerator, questionnaireCount) {
+exports.generateForm = function (dataProducer, formName, formItemGenerator, questionnaireCount) {
 
+  var dataArray = dataProducer();
   var questionCount = (typeof questionnaireCount === 'undefined') ? DEFAULT_QUESTIONNAIRE_COUNT : questionnaireCount;
 
   console.log("questionCount: "+questionCount);
