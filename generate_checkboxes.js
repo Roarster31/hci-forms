@@ -1,5 +1,6 @@
 var permutations = require('./permutations.js');
 var Underscore = require('underscore');
+var mkdirp = require("mkdirp");
 var fs = require('fs');
 
 var getPromptText = function (sample) {
@@ -83,12 +84,17 @@ for(var i=0; i<sampleCount; i++) {
 
   var html = preForm + form + postForm;
 
-  fs.writeFile(__dirname+"/out/sample"+i+".html", html, function(err) {
+  var filePath = __dirname+"/out/sample"+i+".html";
+  
+  mkdirp(filePath, function (err) {
+    fs.writeFile(filePath, html, function(err) {
       if(err) {
           return console.log(err);
       }
 
       console.log("Sample "+i+" was saved!");
   }); 
+  })
+  
 
 }
