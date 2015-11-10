@@ -10,12 +10,12 @@ Then type `node run.js -all` to run all generators.
 
 or
 
-`node run.js -text` to just run the lorem text input generator
+`node run.js --text` to just run the lorem text input generator
 
 or
 
-`node run.js -checkbox` to just run the lorem checkbox generator
+`node run.js --checkbox` to just run the lorem checkbox generator
 
 or
 
-`node run.js -training` to just run the training questionnaire generator
+`node run.js --training` to just run the training questionnaire generator
