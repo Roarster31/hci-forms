@@ -38,50 +38,54 @@ router.get('/sendForm', function(req, res){
     var referer = req.headers['referer'];
     var sectionsOfReferer = referer.split('-');
 
-    var fileName = "" + sectionsOfReferer[1] + "-" + sectionsOfReferer[2] + ".csv";
-
-
-
-    if(!path.existsSync(fileName)){
-        fs.writeFileSync(fileName, '');
-    }
-    fs.appendFile(fileName, "hello", function (err) {
-        console.log(err);
-    });
-
+    var fileName = "out/" + sectionsOfReferer[1] + "-" + sectionsOfReferer[2] + ".csv";
 
     var qResult = [];
+    var csvOutput = "";
 
-    for(var i = 0; i < 15; i++) {
-        var questionCorrect = true;
+    if(req.query.input != undefined) {
+        for (var i = 0; i < 15; i++) {
+            var questionCorrect = true;
 
-        for(var x = 0; x < 6; x++){
-            var hasValues = req.query.input.hasOwnProperty(i);
-            var shouldBe = req.query.en_input[i][x];
+            for (var x = 0; x < 6; x++) {
+                var hasValues = req.query.input.hasOwnProperty(i);
+                var shouldBe = req.query.en_input[i][x];
 
-            if(hasValues && shouldBe == "true") {
-                var result = req.query.input[i].hasOwnProperty(x);
-                if (result == false && shouldBe == "true") {
+                if (hasValues && shouldBe == "true") {
+                    var result = req.query.input[i].hasOwnProperty(x);
+                    if (result == false && shouldBe == "true") {
+                        questionCorrect = false;
+                    }
+                    if (result == true && shouldBe == "false") {
+                        questionCorrect = false;
+                    }
+                } else if (hasValues && shouldBe == "false") {
+                    var result = req.query.input[i].hasOwnProperty(x);
+                    if (result == true) {
+                        questionCorrect = false;
+                    }
+                } else if (!hasValues && shouldBe == "true") {
                     questionCorrect = false;
                 }
-                if (result == true && shouldBe == "false") {
-                    questionCorrect = false;
-                }
-            } else if(hasValues && shouldBe == "false"){
-                var result = req.query.input[i].hasOwnProperty(x);
-                if(result == true){
-                    questionCorrect = false;
-                }
-            } else if(!hasValues && shouldBe == "true"){
-                questionCorrect = false;
+
             }
-
+            if (i != 0) {
+                csvOutput += ",";
+            }
+            csvOutput += questionCorrect;
+            qResult.push(questionCorrect);
         }
-        qResult.push(questionCorrect);
+        csvOutput += "\n";
+
+        fs.appendFile(fileName, csvOutput, function (err) {
+            console.log(err)
+        });
+
+        console.log(qResult);
+        res.send("Response received! Thank You");
+    } else {
+        res.send("Empty response");
     }
-    console.log("hello");
-    console.log(qResult);
-    res.send("You send" + req.body.name);
 });
 router.get('/', function(req, res) {
     res.sendFile(__dirname + '/views/index.html')

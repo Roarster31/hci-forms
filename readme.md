@@ -19,3 +19,12 @@ or
 or
 
 `node run.js --training` to just run the training questionnaire generator
+
+##Running response server
+Install node and then inside this dir run `npm install` to install dependencies.
+
+Then type `node server.js` to start up the server. Navigate to `localhost:3000` in your browser to view questionnaires.
+
+Responses are recorded in CSV format in the `/out` directory. 
+
+Remove the csv files to reset responses.
