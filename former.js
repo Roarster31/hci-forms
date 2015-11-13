@@ -37,7 +37,7 @@ exports.generateForm = function (dataProducer, formName, formItemGenerator, ques
     console.log("sample "+i+":");
     console.log(sample);
 
-    var preForm = "<!DOCTYPE html><html><body><link rel='stylesheet' href='/stylesheets/style.css'> <form action='/sendForm' method='get'>";
+    var preForm = "<!DOCTYPE html><html><body oncopy='return false' oncut='return false' onpaste='return false'><link rel='stylesheet' href='/stylesheets/style.css'> <form action='/sendForm' method='get'>";
     var postForm = "<br /><input type='submit' value='Done' /> </form></body></html>";
 
     var form = "";

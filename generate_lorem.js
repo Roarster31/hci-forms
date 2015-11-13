@@ -30,6 +30,6 @@ exports.getData = function () {
 }
 
 exports.codeGenerator = function (item, i) {
-  var output = "<br>Copy the following phrase: "+item+"<br><input type='text' name='fname'>"
+  var output = "<br>Copy the following phrase: "+item+"<br><input type='text' name='lorem["+i+"]'><input type='hidden' value='"+item+"' name='lorem_ans["+i+"]' />";
   return output;
 }

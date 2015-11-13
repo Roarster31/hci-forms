@@ -33,6 +33,13 @@ router.get('/training', function(req, res){
 });
 
 
+function saveFile(csvOutput, fileName) {
+    csvOutput += "\n";
+
+    fs.appendFile(fileName, csvOutput, function (err) {
+        console.log(err)
+    });
+}
 router.get('/sendForm', function(req, res){
 
     var referer = req.headers['referer'];
@@ -43,16 +50,18 @@ router.get('/sendForm', function(req, res){
     var qResult = [];
     var csvOutput = "";
 
-    if(req.query.input != undefined) {
-        for (var i = 0; i < 15; i++) {
+    var QUESTION_NUMBER = 15;
+    var queryMain = req.query;
+    if(queryMain.input != undefined) {
+        for (var i = 0; i < QUESTION_NUMBER; i++) {
             var questionCorrect = true;
 
             for (var x = 0; x < 6; x++) {
-                var hasValues = req.query.input.hasOwnProperty(i);
-                var shouldBe = req.query.en_input[i][x];
+                var hasValues = queryMain.input.hasOwnProperty(i);
+                var shouldBe = queryMain.en_input[i][x];
 
                 if (hasValues && shouldBe == "true") {
-                    var result = req.query.input[i].hasOwnProperty(x);
+                    var result = queryMain.input[i].hasOwnProperty(x);
                     if (result == false && shouldBe == "true") {
                         questionCorrect = false;
                     }
@@ -60,7 +69,7 @@ router.get('/sendForm', function(req, res){
                         questionCorrect = false;
                     }
                 } else if (hasValues && shouldBe == "false") {
-                    var result = req.query.input[i].hasOwnProperty(x);
+                    var result = queryMain.input[i].hasOwnProperty(x);
                     if (result == true) {
                         questionCorrect = false;
                     }
@@ -75,13 +84,26 @@ router.get('/sendForm', function(req, res){
             csvOutput += questionCorrect;
             qResult.push(questionCorrect);
         }
-        csvOutput += "\n";
 
-        fs.appendFile(fileName, csvOutput, function (err) {
-            console.log(err)
-        });
+        saveFile(csvOutput, fileName);
 
-        console.log(qResult);
+        res.send("Response received! Thank You");
+    } else if(queryMain.lorem != undefined){
+        for(var i = 0; i < QUESTION_NUMBER; i++){
+            var userContent = queryMain.lorem[i];
+            var correctContent = queryMain.lorem_ans[i];
+
+            var qCorrect = false;
+            if(userContent == correctContent){
+                qCorrect = true;
+            }
+            if (i != 0) {
+                csvOutput += ",";
+            }
+            csvOutput += qCorrect;
+        }
+
+        saveFile(csvOutput, fileName);
         res.send("Response received! Thank You");
     } else {
         res.send("Empty response");

@@ -6,7 +6,7 @@ A bunch of stuff to generate our forms for HCI.
 
 Install node and then inside this dir run `npm install` to install dependencies.
 
-Then type `node run.js -all` to run all generators.
+Then type `node run.js --all` to run all generators.
 
 or
 
