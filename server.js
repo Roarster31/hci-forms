@@ -52,7 +52,10 @@ router.get('/sendForm', function(req, res){
 
     var QUESTION_NUMBER = 15;
     var queryMain = req.query;
-    if(queryMain.input != undefined) {
+    if(queryMain.en_input != undefined && queryMain.lorem != undefined){
+      // It is the training so do nothing
+        res.send("Thank You");
+    } else if(queryMain.input != undefined) {
         for (var i = 0; i < QUESTION_NUMBER; i++) {
             var questionCorrect = true;
 
