@@ -5,6 +5,7 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 var path = require('path');
+var exec = require('child_process').exec;
 
 
 /* GET home page. */
@@ -55,12 +56,12 @@ router.get('/sendForm', function(req, res){
     if(queryMain.en_input != undefined && queryMain.lorem != undefined){
       // It is the training so do nothing
         res.send("Thank You");
-    } else if(queryMain.input != undefined) {
+    } else if(queryMain.en_input != undefined) {
         for (var i = 0; i < QUESTION_NUMBER; i++) {
             var questionCorrect = true;
 
             for (var x = 0; x < 6; x++) {
-                var hasValues = queryMain.input.hasOwnProperty(i);
+                var hasValues = queryMain.input && queryMain.input.hasOwnProperty(i);
                 var shouldBe = queryMain.en_input[i][x];
 
                 if (hasValues && shouldBe == "true") {
@@ -90,7 +91,11 @@ router.get('/sendForm', function(req, res){
 
         saveFile(csvOutput, fileName);
 
-        res.send("Response received! Thank You");
+        // res.send("Response received! Thank You");
+        exec('wc -l < '+fileName, function (error, index) {
+            res.send("Response received! Thank You (id: "+index.trim()+")");
+        });
+
     } else if(queryMain.lorem != undefined){
         for(var i = 0; i < QUESTION_NUMBER; i++){
             var userContent = queryMain.lorem[i];
@@ -107,7 +112,11 @@ router.get('/sendForm', function(req, res){
         }
 
         saveFile(csvOutput, fileName);
-        res.send("Response received! Thank You");
+        
+        exec('wc -l < '+fileName, function (error, index) {
+            res.send("Response received! Thank You (id: "+index.trim()+")");
+        });
+
     } else {
         res.send("Empty response");
     }
