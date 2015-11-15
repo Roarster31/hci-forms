@@ -18,7 +18,7 @@ if (runCheckbox) {
 }
 
 if (runTraining) {
-  Former.generateForm(Training.getData, "training", Training.codeGenerator, 1);
+  Former.generateForm(Training.getData, "training", Training.codeGenerator);
 } 
 
 if(!runText && !runCheckbox && !runTraining) {

@@ -29,8 +29,16 @@ router.get('/questions-paper-text', function(req, res){
     res.sendFile(__dirname + '/out/text_input_2.html');
 });
 
-router.get('/training', function(req, res){
+router.get('/training-computer', function(req, res){
     res.sendFile(__dirname + '/out/training_0.html');
+});
+
+router.get('/training-tablet', function(req, res){
+    res.sendFile(__dirname + '/out/training_1.html');
+});
+
+router.get('/training-paper', function(req, res){
+    res.sendFile(__dirname + '/out/training_2.html');
 });
 
 
