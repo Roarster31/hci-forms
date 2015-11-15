@@ -75,7 +75,7 @@ exports.codeGenerator = function (item, i) {
   for(var k=0; k<item.length; k++) {
     output += "<div class='checkboxHolder'>";
     
-    output += "<label style='' for='"+name+"'>"+(k+1)+"</label>"
+    output += "<label style='' for='input["+i+"]["+k+"]'>"+(k+1)+"</label>"
     output += "<input type='checkbox' name='input["+i+"]["+k+"]'>" 
     output += "<input type='hidden' name='en_input["+i+"]["+k+"]' value='"+(item[k] == 1)+"'>"  
     output += "</div>"
