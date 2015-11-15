@@ -69,11 +69,22 @@ exports.getData = function () {
 
 exports.codeGenerator = function (item, i) {
   var prompt = getPromptText(item);
-  var output = "<br><p>"+prompt+"</p>";
-  console.log("data length: "+item);
+  var output = "<p>"+prompt+"</p>";
+  output += "<div style='vertical-align: middle;'>";
+
   for(var k=0; k<item.length; k++) {
-    output += "<input type='checkbox' name='input["+i+"]["+k+"]'>" 
+    output += "<div class='checkboxHolder'>";
+    var name = "input["+i+"]["+k+"]";
+    
+    output += "<label style='' for='"+name+"'>"+(k+1)+"</label>"
+    output += "<input type='checkbox' name='"+name+"'></input>" 
     output += "<input type='hidden' name='en_input["+i+"]["+k+"]' value='"+(item[k] == 1)+"'>"  
+    output += "</div>"
+
   }
+  
+  output += "<br>"
+  output += "<br>"
+  output += "</div>";
   return output;
 }

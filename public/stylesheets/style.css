@@ -30,4 +30,15 @@ input[type="submit"] {
   margin: 20px;
   text-align: center; }
 
+input[type="checkbox"] {
+  margin-left: 0px;
+  margin-right: 0px;
+  display: block; }
+
+.checkboxHolder {
+  float: left;
+  vertical-align: middle;
+  margin-left: 5px;
+  margin-right: 5px; }
+
 /*# sourceMappingURL=style.css.map */
