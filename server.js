@@ -99,7 +99,6 @@ router.get('/sendForm', function(req, res){
 
         saveFile(csvOutput, fileName);
 
-        // res.send("Response received! Thank You");
         exec('wc -l < '+fileName, function (error, index) {
             res.send("Response received! Thank You (id: "+index.trim()+")");
         });
