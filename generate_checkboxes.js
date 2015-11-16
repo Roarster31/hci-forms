@@ -72,12 +72,13 @@ exports.codeGenerator = function (item, i) {
   var output = "<p>"+prompt+"</p>";
   output += "<div style='vertical-align: middle;'>";
 
-  for(var k=0; k<item.length; k++) {
+  for(var k=0; k < item.length; k++) {
     output += "<div class='checkboxHolder'>";
     
-    output += "<label style='' for='input["+i+"]["+k+"]'>"+(k+1)+"</label>"
-    output += "<input type='checkbox' name='input["+i+"]["+k+"]'>" 
-    output += "<input type='hidden' name='en_input["+i+"]["+k+"]' value='"+(item[k] == 1)+"'>"  
+    output += "<label style='' for='input_"+i+"["+k+"]'>"+(k+1)+"</label>"
+    output += "<input type='checkbox' name='input_"+i+"["+k+"]'>"
+    output += "<input type='hidden' name='input_"+i+"'>"
+    output += "<input type='hidden' name='en_input_"+i+"["+k+"]' value='"+(item[k] == 1)+"'>"  
     output += "</div>"
 
   }

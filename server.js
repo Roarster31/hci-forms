@@ -59,44 +59,47 @@ router.get('/sendForm', function(req, res){
     var qResult = [];
     var csvOutput = "";
 
-    var QUESTION_NUMBER = 15;
+
+
+    var QUESTION_NUMBER = 21;
     var queryMain = req.query;
-    if(queryMain.en_input != undefined && queryMain.lorem != undefined){
+
+    console.log(queryMain);
+
+    if(queryMain['input_0'] != undefined && queryMain.lorem != undefined){
       // It is the training so do nothing
         res.send("Thank You");
-    } else if(queryMain.en_input != undefined) {
+    } else if(queryMain['input_0'] != undefined) {
         for (var i = 0; i < QUESTION_NUMBER; i++) {
             var questionCorrect = true;
+            var rootValueName = "input_"+i;
+            var rootCorrectValueName = "en_"+rootValueName;
 
             for (var x = 0; x < 6; x++) {
-                var hasValues = queryMain.input && queryMain.input.hasOwnProperty(i);
-                var shouldBe = queryMain.en_input[i][x];
+                var shouldBe = queryMain[rootCorrectValueName][x] == "true";
+                var result = queryMain[rootValueName][x] != '';
 
-                if (hasValues && shouldBe == "true") {
-                    var result = queryMain.input[i].hasOwnProperty(x);
-                    if (result == false && shouldBe == "true") {
-                        questionCorrect = false;
-                    }
-                    if (result == true && shouldBe == "false") {
-                        questionCorrect = false;
-                    }
-                } else if (hasValues && shouldBe == "false") {
-                    var result = queryMain.input[i].hasOwnProperty(x);
-                    if (result == true) {
-                        questionCorrect = false;
-                    }
-                } else if (!hasValues && shouldBe == "true") {
+                console.log("Q"+i+"_"+x+" comparing result: "+result+" to shouldBe: "+shouldBe);
+
+                if(shouldBe != result) {
                     questionCorrect = false;
+                    break;
                 }
-
             }
+            
             if (i != 0) {
                 csvOutput += ",";
             }
+
+            console.log("Q"+i+"_"+x+" questionCorrect: "+questionCorrect);
+
             csvOutput += questionCorrect;
             qResult.push(questionCorrect);
+
+            questionCorrect = true;
         }
 
+        // console.log(csvOutput);
         saveFile(csvOutput, fileName);
 
         exec('wc -l < '+fileName, function (error, index) {
@@ -109,9 +112,10 @@ router.get('/sendForm', function(req, res){
             var correctContent = queryMain.lorem_ans[i];
 
             var qCorrect = false;
-            if(userContent == correctContent){
+            if(userContent.toLowerCase() == correctContent.toLowerCase()){
                 qCorrect = true;
             }
+
             if (i != 0) {
                 csvOutput += ",";
             }
